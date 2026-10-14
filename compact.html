@@ -1,0 +1,1183 @@
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Ciudad de Datos Incolmotos Yamaha (Power BI)</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Ciudad Digital Yamaha — single dark "night city" world: red Yamaha accent
+   glowing against a navy-black skyline. Deliberately single-theme. */
+:root{
+  color-scheme: dark;
+  --bg: #07080d;
+  --bg-2: #0d0f1a;
+  --panel: #12141f;
+  --panel-2: #181b2a;
+  --line: #262a3d;
+  --text: #f1f2f6;
+  --muted: #8d91ab;
+  --accent: #e60000;
+  --accent-soft: #ff4d4d;
+  --accent-dim: #3a1012;
+  --good: #1fae6a;
+  --bad: #e03a3a;
+  --gold: #f2b705;
+
+  --font-display: 'Orbitron', 'Segoe UI', sans-serif;
+  --font-body: 'Inter', 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+*{box-sizing:border-box;}
+html,body{height:100%;}
+body{
+  margin:0;
+  font-family:var(--font-body);
+  background:
+    radial-gradient(ellipse 900px 500px at 50% -10%, rgba(230,0,0,.16), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 110%, rgba(230,0,0,.08), transparent 60%),
+    var(--bg);
+  color:var(--text);
+  min-height:100%;
+}
+
+.wrap{
+  max-width:860px;
+  margin:0 auto;
+  padding-top:max(28px, env(safe-area-inset-top, 0px));
+  padding-bottom:max(40px, env(safe-area-inset-bottom, 0px));
+  padding-left:max(18px, env(safe-area-inset-left, 0px));
+  padding-right:max(18px, env(safe-area-inset-right, 0px));
+}
+
+/* ---------- Header ---------- */
+.eyebrow{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--accent-soft);
+  margin-bottom:14px;
+}
+.eyebrow::before,.eyebrow::after{
+  content:"";
+  height:1px;
+  width:28px;
+  background:linear-gradient(90deg, transparent, var(--accent));
+}
+.eyebrow::after{ transform:scaleX(-1); }
+
+h1{
+  font-family:var(--font-display);
+  font-weight:800;
+  font-size:clamp(28px, 6vw, 44px);
+  line-height:1.08;
+  text-align:center;
+  letter-spacing:.01em;
+  margin:0 0 10px;
+  text-wrap:balance;
+  color:var(--text);
+  text-shadow:0 0 28px rgba(230,0,0,.35);
+}
+h1 span{ color:var(--accent-soft); }
+
+.subtitle{
+  text-align:center;
+  color:var(--muted);
+  font-size:15px;
+  max-width:52ch;
+  margin:0 auto 28px;
+  text-wrap:balance;
+}
+
+/* ---------- Team intro ---------- */
+#stage-team p.lead{
+  color:var(--muted);
+  font-size:14.5px;
+  line-height:1.6;
+  margin:0 0 24px;
+  max-width:60ch;
+}
+.team-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+  margin-bottom:24px;
+}
+@media (max-width:520px){
+  .team-grid{ grid-template-columns:1fr; }
+}
+.team-card{
+  position:relative;
+  background:var(--panel-2);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:18px 16px 16px;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  min-width:0;
+}
+.team-card .badge{
+  position:absolute;
+  top:-10px; left:14px;
+  width:26px; height:26px;
+  border-radius:50%;
+  background:var(--accent);
+  color:#fff;
+  font-family:var(--font-mono);
+  font-size:12px;
+  font-weight:700;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 0 0 3px var(--bg-2);
+}
+.team-card .role-icon{ font-size:24px; margin:6px 0 10px; }
+.team-card .t-name{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:15px;
+  color:var(--text);
+  line-height:1.3;
+}
+.team-card .t-role{
+  font-size:12.5px;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  color:var(--accent-soft);
+  font-weight:600;
+}
+
+/* ---------- Tour ---------- */
+#stage-tour .tour-head{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:18px;
+}
+#stage-tour .tour-icon{
+  flex:none;
+  width:52px; height:52px;
+  border-radius:14px;
+  background:var(--panel-2);
+  border:1px solid var(--line);
+  display:flex; align-items:center; justify-content:center;
+  font-size:26px;
+}
+#stage-tour .tour-kicker{
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--accent-soft);
+  margin-bottom:4px;
+}
+#stage-tour h2{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:clamp(19px,3.6vw,25px);
+  margin:0;
+  text-wrap:balance;
+}
+.phrase-list{
+  list-style:none;
+  margin:0 0 24px;
+  padding:0;
+  display:grid;
+  gap:12px;
+}
+.phrase-list li{
+  position:relative;
+  padding-left:20px;
+  font-size:15.5px;
+  line-height:1.5;
+  color:var(--text);
+}
+.phrase-list li::before{
+  content:"";
+  position:absolute;
+  left:0; top:.5em;
+  width:8px; height:8px;
+  border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 8px rgba(230,0,0,.6);
+}
+.frentes-row{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:8px;
+  margin-bottom:22px;
+}
+@media (max-width:560px){
+  .frentes-row{ grid-template-columns:repeat(3,1fr); }
+}
+.frente-chip{
+  background:var(--bg-2);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:12px 6px;
+  text-align:center;
+  color:var(--muted);
+  font-size:11.5px;
+  font-weight:600;
+  line-height:1.25;
+  min-width:0;
+}
+.frente-chip .icon{
+  display:block;
+  font-size:20px;
+  margin-bottom:5px;
+  filter:grayscale(1) opacity(.55);
+  transition:filter .3s ease;
+}
+.frente-chip.seen{ color:var(--text); }
+.frente-chip.active{
+  color:var(--text);
+  border-color:var(--accent);
+  background:linear-gradient(160deg, var(--panel-2), var(--bg-2));
+  box-shadow:0 0 0 1px rgba(230,0,0,.25);
+}
+.frente-chip.active .icon{ filter:none; }
+.tour-nav{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:10px;
+}
+
+/* ---------- Scoreboard ---------- */
+.scoreboard{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:14px 18px;
+  margin-bottom:22px;
+}
+.scoreboard .label{
+  font-size:11px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+.scoreboard .value{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:22px;
+  font-variant-numeric:tabular-nums;
+}
+.scoreboard .value .max{ color:var(--muted); font-size:15px; }
+.player-chip{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:13px;
+  color:var(--muted);
+}
+.player-chip strong{ color:var(--text); font-weight:600; }
+
+/* ---------- City grid ---------- */
+.city{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:10px;
+  margin-bottom:26px;
+}
+@media (max-width:620px){
+  .city{ grid-template-columns:repeat(3,1fr); }
+}
+.building{
+  position:relative;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:14px 8px;
+  text-align:center;
+  font-size:12.5px;
+  font-weight:600;
+  color:var(--muted);
+  transition:transform .4s ease, box-shadow .4s ease, color .4s ease, border-color .4s ease, background .4s ease;
+  min-width:0;
+}
+.building .icon{
+  display:block;
+  font-size:22px;
+  margin-bottom:6px;
+  filter:grayscale(1) opacity(.5);
+  transition:filter .4s ease;
+}
+.building.active{
+  color:var(--text);
+  background:linear-gradient(160deg, var(--panel-2), var(--panel));
+  border-color:var(--accent);
+  box-shadow:0 0 0 1px rgba(230,0,0,.25), 0 8px 24px rgba(230,0,0,.18);
+}
+.building.active .icon{ filter:none; }
+@media (prefers-reduced-motion:no-preference){
+  .building.active{ animation:rise .5s ease; }
+}
+@keyframes rise{
+  from{ transform:translateY(6px) scale(.96); opacity:.4; }
+  to{ transform:translateY(0) scale(1); opacity:1; }
+}
+
+/* ---------- Panels (shared card look for the active stage) ---------- */
+.stage{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:clamp(20px,4vw,32px);
+}
+
+/* Name capture */
+#stage-start p{ color:var(--muted); font-size:14px; line-height:1.6; }
+.field-label{
+  display:block;
+  font-size:11px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:8px;
+}
+input[type="text"]{
+  width:100%;
+  background:var(--bg-2);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:14px 16px;
+  font-family:var(--font-body);
+  font-size:16px;
+  color:var(--text);
+  margin-bottom:18px;
+}
+input[type="text"]:focus{
+  outline:2px solid var(--accent);
+  outline-offset:1px;
+  border-color:var(--accent);
+}
+input[type="text"]::placeholder{ color:#565a72; }
+
+/* Question */
+.q-count{
+  font-family:var(--font-mono);
+  font-size:12px;
+  color:var(--accent-soft);
+  letter-spacing:.08em;
+  margin-bottom:10px;
+}
+#question{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:clamp(18px,3.4vw,24px);
+  line-height:1.35;
+  margin:0 0 22px;
+  text-wrap:balance;
+}
+
+button{
+  font-family:var(--font-body);
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  transition:transform .15s ease, box-shadow .15s ease, background .25s ease, border-color .25s ease;
+}
+button:focus-visible{ outline:2px solid var(--accent-soft); outline-offset:2px; }
+
+#options{ display:flex; flex-direction:column; gap:10px; }
+.option{
+  width:100%;
+  text-align:left;
+  background:var(--bg-2);
+  border:1px solid var(--line);
+  color:var(--text);
+  padding:16px 18px;
+  font-size:15px;
+  font-weight:500;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.option .mark{
+  flex:none;
+  width:24px; height:24px;
+  border-radius:50%;
+  border:1px solid var(--line);
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-mono);
+  font-size:11px;
+  color:var(--muted);
+}
+.option:not(:disabled):hover{
+  border-color:var(--accent);
+  transform:translateY(-1px);
+}
+.option:disabled{ cursor:default; }
+.option.correct{
+  background:rgba(31,174,106,.12);
+  border-color:var(--good);
+}
+.option.correct .mark{ background:var(--good); border-color:var(--good); color:#06281a; }
+.option.wrong{
+  background:rgba(224,58,58,.1);
+  border-color:var(--bad);
+}
+.option.wrong .mark{ background:var(--bad); border-color:var(--bad); color:#2a0808; }
+
+.primary-btn{
+  background:var(--accent);
+  color:#fff;
+  font-weight:700;
+  padding:15px 20px;
+  font-size:15px;
+  width:100%;
+}
+.primary-btn:hover{ background:var(--accent-soft); }
+.primary-btn:disabled{ background:var(--panel-2); color:var(--muted); cursor:not-allowed; }
+.ghost-btn{
+  background:transparent;
+  border:1px solid var(--line);
+  color:var(--muted);
+  padding:12px 18px;
+  font-size:13px;
+}
+.ghost-btn:hover{ border-color:var(--accent); color:var(--text); }
+
+/* Final stage */
+#stage-final{ display:none; text-align:center; }
+.trophy{
+  font-size:64px;
+  margin-bottom:6px;
+  filter:drop-shadow(0 0 20px rgba(230,0,0,.5));
+}
+#stage-final h2{
+  font-family:var(--font-display);
+  font-size:clamp(20px,4vw,28px);
+  margin:0 0 6px;
+}
+#stage-final .result-line{ color:var(--muted); font-size:14px; margin-bottom:22px; }
+.checklist{
+  text-align:left;
+  list-style:none;
+  padding:0; margin:0 0 24px;
+  display:grid;
+  gap:8px;
+}
+.checklist li{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:14px;
+  color:var(--muted);
+  padding:10px 14px;
+  background:var(--bg-2);
+  border:1px solid var(--line);
+  border-radius:10px;
+}
+.checklist li.done{ color:var(--text); }
+.checklist .tick{
+  flex:none;
+  width:20px; height:20px;
+  border-radius:50%;
+  background:var(--good);
+  color:#06281a;
+  display:flex; align-items:center; justify-content:center;
+  font-size:12px;
+  font-weight:700;
+}
+
+.winner-card{
+  background:linear-gradient(160deg, rgba(242,183,5,.12), var(--panel-2));
+  border:1px solid rgba(242,183,5,.4);
+  border-radius:14px;
+  padding:18px;
+  margin-bottom:22px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  text-align:left;
+}
+.winner-card .medal{ font-size:30px; flex:none; }
+.winner-card .name{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:17px;
+  color:var(--gold);
+}
+.winner-card .meta{ font-size:12.5px; color:var(--muted); }
+
+.rank-title{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:14px;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin:0 0 12px;
+}
+.rank-list{
+  list-style:none;
+  margin:0 0 24px;
+  padding:0;
+  display:grid;
+  gap:8px;
+  text-align:left;
+}
+.rank-list li{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:10px 14px;
+  border-radius:10px;
+  background:var(--bg-2);
+  border:1px solid var(--line);
+  font-size:14px;
+}
+.rank-list li.me{ border-color:var(--accent); background:var(--accent-dim); }
+.rank-list .pos{
+  font-family:var(--font-mono);
+  color:var(--muted);
+  width:18px;
+  flex:none;
+}
+.rank-list .nm{ flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:600; }
+.rank-list .nm .area-tag{ display:block; font-weight:400; font-size:11.5px; color:var(--muted); white-space:normal; }
+.rank-list .sc{ font-variant-numeric:tabular-nums; color:var(--muted); flex:none; }
+
+.btn-row{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+
+footer{
+  text-align:center;
+  margin-top:30px;
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:.08em;
+  color:#4a4e66;
+}
+
+/* ====================================================================
+   Versión compacta para el visual "HTML Content" en Power BI: el
+   espacio disponible suele ser bajo y ancho, así que se reduce el
+   alto de cada sección en lugar de rediseñar el layout.
+   ==================================================================== */
+.wrap{
+  padding-top:max(10px, env(safe-area-inset-top, 0px));
+  padding-bottom:max(14px, env(safe-area-inset-bottom, 0px));
+}
+.eyebrow{ margin-bottom:8px; font-size:10px; gap:8px; }
+.eyebrow::before,.eyebrow::after{ width:18px; }
+h1{ font-size:clamp(18px, 3.4vw, 26px); margin-bottom:4px; }
+.subtitle{ font-size:12.5px; margin-bottom:14px; }
+
+.stage{ padding:clamp(12px,2.4vw,18px); border-radius:14px; }
+
+#stage-team p.lead{ font-size:12.5px; line-height:1.45; margin-bottom:14px; }
+.team-grid{ gap:8px; margin-bottom:14px; }
+.team-card{ padding:14px 10px 10px; gap:2px; }
+.team-card .role-icon{ font-size:18px; margin:3px 0 5px; }
+.team-card .t-name{ font-size:12.5px; }
+.team-card .t-role{ font-size:10.5px; }
+
+#stage-tour .tour-head{ gap:10px; margin-bottom:10px; }
+#stage-tour .tour-icon{ width:38px; height:38px; font-size:18px; border-radius:10px; }
+#stage-tour h2{ font-size:clamp(15px,2.6vw,19px); }
+#stage-tour .tour-kicker{ font-size:10px; margin-bottom:2px; }
+.phrase-list{ gap:6px; margin-bottom:14px; }
+.phrase-list li{ font-size:12.5px; line-height:1.4; padding-left:16px; }
+.frentes-row{ gap:5px; margin-bottom:14px; }
+.frente-chip{ padding:7px 4px; font-size:9.5px; }
+.frente-chip .icon{ font-size:15px; margin-bottom:3px; }
+
+.scoreboard{ padding:9px 12px; margin-bottom:12px; }
+.scoreboard .value{ font-size:16px; }
+.city{ gap:6px; margin-bottom:14px; }
+.building{ padding:8px 4px; font-size:10px; }
+.building .icon{ font-size:15px; margin-bottom:3px; }
+
+.field-label{ margin-bottom:5px; font-size:10px; }
+input[type="text"]{ padding:10px 12px; font-size:14px; margin-bottom:10px; }
+#stage-start p{ font-size:12.5px; margin:0 0 12px; }
+
+.q-count{ font-size:10.5px; margin-bottom:6px; }
+#question{ font-size:clamp(14px,2.6vw,18px); margin-bottom:12px; }
+#options{ gap:7px; }
+.option{ padding:11px 13px; font-size:13px; gap:9px; }
+.option .mark{ width:19px; height:19px; font-size:9.5px; }
+
+.trophy{ font-size:40px; }
+#stage-final h2{ font-size:clamp(15px,2.8vw,20px); }
+#stage-final .result-line{ font-size:12.5px; margin-bottom:12px; }
+.checklist{ gap:5px; margin-bottom:14px; }
+.checklist li{ font-size:12px; padding:7px 10px; }
+.winner-card{ padding:12px; margin-bottom:14px; gap:10px; }
+.winner-card .medal{ font-size:22px; }
+.winner-card .name{ font-size:14px; }
+.winner-card .meta{ font-size:11px; }
+.rank-title{ font-size:11.5px; margin-bottom:8px; }
+.rank-list{ gap:6px; margin-bottom:14px; }
+.rank-list li{ padding:7px 10px; font-size:12px; }
+.btn-row{ gap:8px; }
+
+footer{ display:none; }
+</style>
+
+<div class="wrap">
+
+  <div class="eyebrow">Feria Innovamente · Analítica &amp; Datos</div>
+  <h1>Construye la <span>Ciudad de Datos</span> Incolmotos Yamaha</h1>
+  <p class="subtitle">Cada respuesta correcta levanta un pilar de nuestra arquitectura de datos. Descubre quién y qué área lidera el tablero del día.</p>
+
+  <div id="gameHud" hidden>
+    <div class="scoreboard">
+      <div class="player-chip" id="playerChip" hidden>Jugando: <strong id="playerNameTag"></strong></div>
+      <div class="value">Puntos: <span id="score">0</span><span class="max">/5</span></div>
+    </div>
+
+    <div class="city" id="city">
+      <div class="building" id="b1"><span class="icon">🛡️</span>Gobierno de Datos</div>
+      <div class="building" id="b2"><span class="icon">🎫</span>GLPI</div>
+      <div class="building" id="b3"><span class="icon">🌐</span>Portal Yamaha</div>
+      <div class="building" id="b4"><span class="icon">🤖</span>Inteligencia Artificial</div>
+      <div class="building" id="b5"><span class="icon">📊</span>Analítica Power BI</div>
+    </div>
+  </div>
+
+  <!-- Stage -1: who we are -->
+  <div class="stage" id="stage-team">
+    <div class="eyebrow" style="justify-content:flex-start;margin-bottom:10px">Área de Analítica de Datos</div>
+    <h2 style="font-family:var(--font-display);font-weight:700;font-size:clamp(20px,4vw,26px);margin:0 0 10px">¿Quiénes somos?</h2>
+    <p class="lead">Somos el área de Analítica de Datos de Incolmotos Yamaha. Transformamos los datos de la compañía en información confiable para la toma de decisiones: construimos y gobernamos los tableros de Power BI.</p>
+
+    <div class="team-grid" id="teamGrid"></div>
+
+    <button class="primary-btn" id="teamNextBtn">Continuar</button>
+  </div>
+
+  <!-- Stage 0: select a frente to read about it -->
+  <div class="stage" id="stage-tour" style="display:none">
+    <div class="eyebrow" style="justify-content:flex-start;margin-bottom:10px">Nuestros frentes de trabajo</div>
+    <h2 style="font-family:var(--font-display);font-weight:700;font-size:clamp(19px,3.6vw,25px);margin:0 0 16px">Selecciona uno para conocerlo</h2>
+
+    <div class="frentes-row" id="frentesRow"></div>
+
+    <div class="tour-head">
+      <div class="tour-icon" id="tourIcon">🛡️</div>
+      <div>
+        <div class="tour-kicker" id="tourKicker">Gobierno de Datos</div>
+        <h2 id="tourTitle">Gobierno de Datos</h2>
+      </div>
+    </div>
+    <ul class="phrase-list" id="tourPhrases"></ul>
+    <div class="tour-nav">
+      <button class="primary-btn" id="tourNextBtn" style="width:auto">Continuar al registro</button>
+    </div>
+  </div>
+
+  <!-- Stage 1: name capture -->
+  <div class="stage" id="stage-start" style="display:none">
+    <label class="field-label" for="nameInput">Tu nombre</label>
+    <input type="text" id="nameInput" placeholder="Escribe tu nombre para empezar" maxlength="30" autocomplete="off">
+    <label class="field-label" for="areaInput">Tu área</label>
+    <input type="text" id="areaInput" placeholder="Ej. Servicio, Repuestos, Comercial, Analítica de Datos..." maxlength="40" autocomplete="off">
+    <p>Cinco preguntas sobre nuestra transformación digital. Cada acierto enciende un edificio de la ciudad. Al final verás tu resultado, quién lidera el ranking y qué área suma más puntos.</p>
+    <button class="primary-btn" id="startBtn">Comenzar</button>
+  </div>
+
+  <!-- Stage 2: question -->
+  <div class="stage" id="stage-quiz" style="display:none">
+    <div class="q-count" id="qCount">Pregunta 1 de 5</div>
+    <h2 id="question"></h2>
+    <div id="options"></div>
+  </div>
+
+  <!-- Stage 3: final -->
+  <div class="stage" id="stage-final">
+    <div class="trophy" id="trophyIcon">🏆</div>
+    <h2>¡Ciudad de Datos Completada!</h2>
+    <div class="result-line" id="resultLine"></div>
+
+    <ul class="checklist" id="checklist">
+      <li data-k="b1"><span class="tick">✓</span>Gobierno de Datos</li>
+      <li data-k="b2"><span class="tick">✓</span>GLPI</li>
+      <li data-k="b3"><span class="tick">✓</span>Portal Yamaha</li>
+      <li data-k="b4"><span class="tick">✓</span>Inteligencia Artificial</li>
+      <li data-k="b5"><span class="tick">✓</span>Analítica Power BI</li>
+    </ul>
+
+    <div class="winner-card" id="winnerCard" hidden>
+      <div class="medal">🥇</div>
+      <div>
+        <div class="name" id="winnerName"></div>
+        <div class="meta" id="winnerMeta"></div>
+      </div>
+    </div>
+
+    <div id="rankingBlock" hidden>
+      <p class="rank-title">Ranking del día</p>
+      <ul class="rank-list" id="rankList"></ul>
+    </div>
+
+    <div id="areaBlock" hidden>
+      <p class="rank-title">Resumen por área</p>
+      <ul class="rank-list" id="areaList"></ul>
+    </div>
+
+    <div class="btn-row">
+      <button class="primary-btn" id="playAgainBtn" style="width:auto">Jugar de nuevo</button>
+      <button class="ghost-btn" id="copyPowerBiBtn">Copiar para Power BI</button>
+      <button class="ghost-btn" id="resetBoardBtn">Reiniciar ranking</button>
+    </div>
+    <p id="copyHint" style="font-size:12px;color:var(--muted);margin-top:10px" hidden></p>
+  </div>
+
+  <footer>NIVEL ALCANZADO · ARQUITECTO DE DATOS</footer>
+</div>
+
+<script>
+(function(){
+  const questions = [
+    {
+      question: "¿Cuál es el principal objetivo del Gobierno de Datos?",
+      answers: [
+        "Tener más archivos Excel",
+        "Guardar información en carpetas",
+        "Garantizar calidad, seguridad y confianza en los datos",
+        "Crear más reportes"
+      ],
+      correct: 2
+    },
+    {
+      question: "¿Qué debe hacer un usuario cuando necesita soporte?",
+      answers: [
+        "Enviar WhatsApp",
+        "Llamar al gerente",
+        "Registrar un ticket en GLPI",
+        "Esperar solución"
+      ],
+      correct: 2
+    },
+    {
+      question: "¿Dónde se consultan los informes oficiales de la organización?",
+      answers: [
+        "Excel personal",
+        "Portal Yamaha",
+        "WhatsApp",
+        "Correo antiguo"
+      ],
+      correct: 1
+    },
+    {
+      question: "¿Qué puede acelerar la Inteligencia Artificial?",
+      answers: [
+        "Analizar datos",
+        "Crear consultas SQL",
+        "Generar documentación",
+        "Todas las anteriores"
+      ],
+      correct: 3
+    },
+    {
+      question: "¿Cuál es el principal beneficio de Power BI?",
+      answers: [
+        "Guardar archivos",
+        "Tomar decisiones basadas en datos",
+        "Enviar correos",
+        "Crear tickets"
+      ],
+      correct: 1
+    }
+  ];
+
+  const LB_KEY = "ciudadDigitalYamaha.leaderboard";
+
+  const team = [
+    { name: "Julieth Argaez Quiroz", role: "Jefe de Analítica de Datos", icon: "🧭" },
+    { name: "Juan Carlos Osorio", role: "Analista de Datos", icon: "📊" },
+    { name: "Ramon Zapata Quintero", role: "Analista de Datos", icon: "📊" },
+    { name: "Sara González Londoño", role: "Practicante", icon: "🌱" }
+  ];
+
+  const topics = [
+    {
+      icon: "🛡️",
+      title: "Gobierno de Datos",
+      phrases: [
+        "Calidad, seguridad y confianza: así cuidamos cada dato que generamos.",
+        "Migramos nuestros informes a la nube de Fabric y versionamos cada cambio con Git.",
+        "Formato PBIP, control de permisos y CI/CD con DevOps: Power BI con reglas de ingeniería de software."
+      ]
+    },
+    {
+      icon: "🎫",
+      title: "GLPI",
+      phrases: [
+        "Un ticket, una trazabilidad, una solución.",
+        "Así canalizamos cada solicitud de soporte del área hacia la persona correcta."
+      ]
+    },
+    {
+      icon: "🌐",
+      title: "Portal Yamaha",
+      phrases: [
+        "Un solo lugar para consultar todos los Power BI de la organización.",
+        "Centralizamos el acceso a los informes oficiales: nada de versiones sueltas por correo."
+      ]
+    },
+    {
+      icon: "🤖",
+      title: "Inteligencia Artificial",
+      phrases: [
+        "GitHub Copilot ya escribe y revisa código junto a nosotros, todos los días.",
+        "MCP conecta modelos de IA directamente con nuestros datos y nuestras herramientas.",
+        "Menos tiempo armando informes, más tiempo analizando lo que realmente importa."
+      ]
+    },
+    {
+      icon: "📊",
+      title: "Power BI y Analítica de Datos",
+      phrases: [
+        "De los datos crudos a decisiones claras, en un solo vistazo.",
+        "Cada visual cuenta una historia; nuestro trabajo es contarla bien."
+      ]
+    }
+  ];
+
+  let tourIndex = 0;
+  const seenTopics = [true, false, false, false, false];
+  let current = 0;
+  let score = 0;
+  let playerName = "";
+  let playerArea = "";
+
+  const el = {
+    gameHud: document.getElementById("gameHud"),
+    stageTeam: document.getElementById("stage-team"),
+    teamGrid: document.getElementById("teamGrid"),
+    teamNextBtn: document.getElementById("teamNextBtn"),
+    stageTour: document.getElementById("stage-tour"),
+    frentesRow: document.getElementById("frentesRow"),
+    tourIcon: document.getElementById("tourIcon"),
+    tourKicker: document.getElementById("tourKicker"),
+    tourTitle: document.getElementById("tourTitle"),
+    tourPhrases: document.getElementById("tourPhrases"),
+    tourNextBtn: document.getElementById("tourNextBtn"),
+    nameInput: document.getElementById("nameInput"),
+    areaInput: document.getElementById("areaInput"),
+    startBtn: document.getElementById("startBtn"),
+    stageStart: document.getElementById("stage-start"),
+    stageQuiz: document.getElementById("stage-quiz"),
+    stageFinal: document.getElementById("stage-final"),
+    question: document.getElementById("question"),
+    options: document.getElementById("options"),
+    qCount: document.getElementById("qCount"),
+    score: document.getElementById("score"),
+    playerChip: document.getElementById("playerChip"),
+    playerNameTag: document.getElementById("playerNameTag"),
+    resultLine: document.getElementById("resultLine"),
+    winnerCard: document.getElementById("winnerCard"),
+    winnerName: document.getElementById("winnerName"),
+    winnerMeta: document.getElementById("winnerMeta"),
+    rankingBlock: document.getElementById("rankingBlock"),
+    rankList: document.getElementById("rankList"),
+    areaBlock: document.getElementById("areaBlock"),
+    areaList: document.getElementById("areaList"),
+    playAgainBtn: document.getElementById("playAgainBtn"),
+    copyPowerBiBtn: document.getElementById("copyPowerBiBtn"),
+    copyHint: document.getElementById("copyHint"),
+    resetBoardBtn: document.getElementById("resetBoardBtn"),
+    trophyIcon: document.getElementById("trophyIcon")
+  };
+
+  function safeGetBoard(){
+    try{
+      const raw = localStorage.getItem(LB_KEY);
+      const parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    }catch(e){ return []; }
+  }
+
+  function safeSaveBoard(board){
+    try{ localStorage.setItem(LB_KEY, JSON.stringify(board)); }catch(e){ /* storage unavailable: continue without saving */ }
+  }
+
+  function addResult(name, area, points){
+    const board = safeGetBoard();
+    board.push({ name: name, area: area, score: points, ts: Date.now() });
+    board.sort((a,b)=> b.score - a.score || a.ts - b.ts);
+    safeSaveBoard(board.slice(0, 50));
+    return board;
+  }
+
+  function renderTeam(){
+    el.teamGrid.innerHTML = "";
+    team.forEach(function(member, i){
+      const card = document.createElement("div");
+      card.className = "team-card";
+      card.innerHTML =
+        '<span class="badge">' + (i+1) + '</span>' +
+        '<span class="role-icon">' + member.icon + '</span>' +
+        '<span class="t-name">' + escapeHtml(member.name) + '</span>' +
+        '<span class="t-role">' + escapeHtml(member.role) + '</span>';
+      el.teamGrid.appendChild(card);
+    });
+  }
+
+  function renderFrentesRow(){
+    el.frentesRow.innerHTML = "";
+    topics.forEach(function(topic, i){
+      const chip = document.createElement("button");
+      chip.type = "button";
+      let cls = "frente-chip";
+      if(i === tourIndex) cls += " active";
+      else if(seenTopics[i]) cls += " seen";
+      chip.className = cls;
+      chip.innerHTML = '<span class="icon">' + topic.icon + '</span>' + topic.title;
+      chip.addEventListener("click", function(){ selectTopic(i); });
+      el.frentesRow.appendChild(chip);
+    });
+  }
+
+  function selectTopic(i){
+    tourIndex = i;
+    seenTopics[i] = true;
+    renderTour();
+  }
+
+  function renderTour(){
+    const topic = topics[tourIndex];
+    el.tourIcon.textContent = topic.icon;
+    el.tourKicker.textContent = "Frente seleccionado";
+    el.tourTitle.textContent = topic.title;
+    el.tourPhrases.innerHTML = "";
+    topic.phrases.forEach(function(phrase){
+      const li = document.createElement("li");
+      li.textContent = phrase;
+      el.tourPhrases.appendChild(li);
+    });
+    renderFrentesRow();
+  }
+
+  function goToRegistration(){
+    el.stageTour.style.display = "none";
+    el.stageStart.style.display = "block";
+  }
+
+  function startQuiz(){
+    const typedName = el.nameInput.value.trim();
+    const typedArea = el.areaInput.value.trim();
+    playerName = typedName || "Participante";
+    playerArea = typedArea || "Sin área";
+    el.playerNameTag.textContent = playerName + " · " + playerArea;
+    el.playerChip.hidden = false;
+    el.gameHud.hidden = false;
+    el.stageStart.style.display = "none";
+    el.stageQuiz.style.display = "block";
+    loadQuestion();
+  }
+
+  function loadQuestion(){
+    if(current >= questions.length){
+      finish();
+      return;
+    }
+    const q = questions[current];
+    el.qCount.textContent = "Pregunta " + (current+1) + " de " + questions.length;
+    el.question.textContent = q.question;
+    el.options.innerHTML = "";
+
+    q.answers.forEach(function(answer, index){
+      const letters = ["A","B","C","D"];
+      const btn = document.createElement("button");
+      btn.className = "option";
+      btn.innerHTML = '<span class="mark">' + letters[index] + '</span><span>' + answer + '</span>';
+      btn.addEventListener("click", function(){ checkAnswer(index, btn); });
+      el.options.appendChild(btn);
+    });
+  }
+
+  function checkAnswer(index, button){
+    const q = questions[current];
+    const allButtons = el.options.querySelectorAll(".option");
+    allButtons.forEach(function(b){ b.disabled = true; });
+
+    if(index === q.correct){
+      button.classList.add("correct");
+      score++;
+      el.score.textContent = score;
+      const building = document.getElementById("b" + (current+1));
+      if(building) building.classList.add("active");
+    }else{
+      button.classList.add("wrong");
+      allButtons[q.correct].classList.add("correct");
+    }
+
+    setTimeout(function(){
+      current++;
+      loadQuestion();
+    }, 1100);
+  }
+
+  function finish(){
+    el.stageQuiz.style.display = "none";
+    el.stageFinal.style.display = "block";
+
+    el.resultLine.textContent = playerName + ", tu puntaje final fue " + score + " de " + questions.length + ".";
+    el.trophyIcon.textContent = score === questions.length ? "🏆" : (score >= 3 ? "🥈" : "🛠️");
+
+    const board = addResult(playerName, playerArea, score);
+    renderRanking(board);
+    renderAreaSummary(board);
+  }
+
+  function renderRanking(board){
+    if(!board.length){
+      el.winnerCard.hidden = true;
+      el.rankingBlock.hidden = true;
+      return;
+    }
+
+    const leader = board[0];
+    el.winnerCard.hidden = false;
+    el.winnerName.textContent = leader.name;
+    el.winnerMeta.textContent = "Líder del día · " + (leader.area || "Sin área") + " · " + leader.score + "/" + questions.length + " puntos";
+
+    el.rankingBlock.hidden = false;
+    el.rankList.innerHTML = "";
+    board.slice(0, 5).forEach(function(entry, i){
+      const li = document.createElement("li");
+      li.innerHTML = '<span class="pos">' + (i+1) + '</span><span class="nm">' + escapeHtml(entry.name) +
+        '<span class="area-tag">' + escapeHtml(entry.area || "Sin área") + '</span></span>' +
+        '<span class="sc">' + entry.score + '/' + questions.length + '</span>';
+      el.rankList.appendChild(li);
+    });
+  }
+
+  function renderAreaSummary(board){
+    if(!board.length){
+      el.areaBlock.hidden = true;
+      return;
+    }
+
+    const totals = {};
+    board.forEach(function(entry){
+      const key = entry.area || "Sin área";
+      if(!totals[key]) totals[key] = { total: 0, count: 0 };
+      totals[key].total += entry.score;
+      totals[key].count += 1;
+    });
+
+    const ranked = Object.keys(totals).map(function(key){
+      return { area: key, total: totals[key].total, count: totals[key].count, avg: totals[key].total / totals[key].count };
+    }).sort(function(a,b){ return b.avg - a.avg || b.total - a.total; });
+
+    el.areaBlock.hidden = false;
+    el.areaList.innerHTML = "";
+    ranked.slice(0, 5).forEach(function(entry, i){
+      const li = document.createElement("li");
+      li.innerHTML = '<span class="pos">' + (i+1) + '</span><span class="nm">' + escapeHtml(entry.area) +
+        '<span class="area-tag">' + entry.count + (entry.count === 1 ? ' participante' : ' participantes') + '</span></span>' +
+        '<span class="sc">' + entry.avg.toFixed(1) + ' prom.</span>';
+      el.areaList.appendChild(li);
+    });
+  }
+
+  function escapeHtml(str){
+    const div = document.createElement("div");
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function resetGame(){
+    current = 0;
+    score = 0;
+    el.score.textContent = "0";
+    document.querySelectorAll(".building").forEach(function(b){ b.classList.remove("active"); });
+    el.stageFinal.style.display = "none";
+    el.gameHud.hidden = true;
+    el.stageStart.style.display = "block";
+    el.playerChip.hidden = true;
+    el.nameInput.value = "";
+    el.areaInput.value = "";
+  }
+
+  el.teamNextBtn.addEventListener("click", function(){
+    el.stageTeam.style.display = "none";
+    el.stageTour.style.display = "block";
+  });
+
+  el.tourNextBtn.addEventListener("click", goToRegistration);
+
+  el.startBtn.addEventListener("click", startQuiz);
+  el.nameInput.addEventListener("keydown", function(e){
+    if(e.key === "Enter") el.areaInput.focus();
+  });
+  el.areaInput.addEventListener("keydown", function(e){
+    if(e.key === "Enter") startQuiz();
+  });
+  function formatForPowerBI(board){
+    // Tab-separated, no header: paste straight into the Power BI "Enter Data" grid
+    // for the RankingFeria table (Jugador / Area / Puntaje / FechaHora).
+    return board.map(function(entry){
+      const d = new Date(entry.ts);
+      const pad = function(n){ return String(n).padStart(2,"0"); };
+      const fecha = d.getFullYear() + "-" + pad(d.getMonth()+1) + "-" + pad(d.getDate()) +
+        " " + pad(d.getHours()) + ":" + pad(d.getMinutes()) + ":" + pad(d.getSeconds());
+      return [entry.name, entry.area || "Sin área", entry.score, fecha].join("\t");
+    }).join("\n");
+  }
+
+  el.copyPowerBiBtn.addEventListener("click", function(){
+    const board = safeGetBoard();
+    if(!board.length){
+      el.copyHint.hidden = false;
+      el.copyHint.textContent = "Aún no hay resultados guardados en este dispositivo.";
+      return;
+    }
+    const text = formatForPowerBI(board);
+    function showHint(msg){
+      el.copyHint.hidden = false;
+      el.copyHint.textContent = msg;
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){
+        showHint("Copiado (" + board.length + " filas). En Power BI: Transformar datos → RankingFeria → Editar → pega con Ctrl+V.");
+      }).catch(function(){
+        showHint("No se pudo copiar automáticamente. Selecciona el texto manualmente.");
+      });
+    }else{
+      showHint("Este navegador no permite copiar automáticamente.");
+    }
+  });
+
+  el.playAgainBtn.addEventListener("click", resetGame);
+  el.resetBoardBtn.addEventListener("click", function(){
+    safeSaveBoard([]);
+    renderRanking([]);
+    renderAreaSummary([]);
+  });
+
+  // Hot-reload friendly boot (keeps state across a republish while open)
+  function boot(data){
+    if(data && typeof data === "object"){
+      current = data.current || 0;
+      score = data.score || 0;
+      playerName = data.playerName || "";
+    }
+  }
+  if(window.claude && window.claude.hot && window.claude.hot.snapshot){
+    window.claude.hot.snapshot(function(){
+      return { current: current, score: score, playerName: playerName };
+    });
+  }
+  if(window.claude && window.claude.hot && window.claude.hot.ready){
+    window.claude.hot.ready(boot);
+  }else{
+    boot(window.claude && window.claude.hot ? window.claude.hot.data : null);
+  }
+
+  renderTeam();
+  renderTour();
+})();
+</script>

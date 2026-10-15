@@ -204,12 +204,12 @@ h1 span{ color:var(--accent-soft); }
 }
 .frentes-row{
   display:grid;
-  grid-template-columns:repeat(5,1fr);
+  grid-template-columns:repeat(3,1fr);
   gap:8px;
   margin-bottom:22px;
 }
-@media (max-width:560px){
-  .frentes-row{ grid-template-columns:repeat(3,1fr); }
+@media (max-width:420px){
+  .frentes-row{ grid-template-columns:repeat(2,1fr); }
 }
 .frente-chip{
   background:var(--bg-2);
@@ -241,7 +241,7 @@ h1 span{ color:var(--accent-soft); }
 .tour-nav{
   display:flex;
   align-items:center;
-  justify-content:flex-end;
+  justify-content:space-between;
   gap:10px;
 }
 
@@ -282,12 +282,12 @@ h1 span{ color:var(--accent-soft); }
 /* ---------- City grid ---------- */
 .city{
   display:grid;
-  grid-template-columns:repeat(5,1fr);
+  grid-template-columns:repeat(3,1fr);
   gap:10px;
   margin-bottom:26px;
 }
-@media (max-width:620px){
-  .city{ grid-template-columns:repeat(3,1fr); }
+@media (max-width:420px){
+  .city{ grid-template-columns:repeat(2,1fr); }
 }
 .building{
   position:relative;
@@ -334,6 +334,8 @@ h1 span{ color:var(--accent-soft); }
 
 /* Name capture */
 #stage-start p{ color:var(--muted); font-size:14px; line-height:1.6; }
+.start-nav{ display:flex; gap:10px; }
+.start-nav .primary-btn{ flex:1; }
 .field-label{
   display:block;
   font-size:11px;
@@ -361,12 +363,36 @@ input[type="text"]:focus{
 input[type="text"]::placeholder{ color:#565a72; }
 
 /* Question */
+.q-count-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:10px;
+}
 .q-count{
   font-family:var(--font-mono);
   font-size:12px;
   color:var(--accent-soft);
   letter-spacing:.08em;
-  margin-bottom:10px;
+}
+.timer-badge{
+  flex:none;
+  font-family:var(--font-mono);
+  font-size:12px;
+  font-weight:700;
+  color:var(--muted);
+  background:var(--bg-2);
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:4px 12px;
+  font-variant-numeric:tabular-nums;
+  transition:background .25s ease, border-color .25s ease, color .25s ease;
+}
+.timer-badge.warn{
+  color:#fff;
+  background:var(--bad);
+  border-color:var(--bad);
 }
 #question{
   font-family:var(--font-display);
@@ -536,6 +562,7 @@ button:focus-visible{ outline:2px solid var(--accent-soft); outline-offset:2px; 
   font-size:14px;
 }
 .rank-list li.me{ border-color:var(--accent); background:var(--accent-dim); }
+.rank-list.scrollable{ max-height:300px; overflow-y:auto; padding-right:4px; }
 .rank-list .pos{
   font-family:var(--font-mono);
   color:var(--muted);
@@ -556,7 +583,6 @@ footer{
   letter-spacing:.08em;
   color:#4a4e66;
 }
-
 /* ====================================================================
    Versión compacta para el visual "HTML Content" en Power BI: el
    espacio disponible suele ser bajo y ancho, así que se reduce el
@@ -589,6 +615,7 @@ h1{ font-size:clamp(18px, 3.4vw, 26px); margin-bottom:4px; }
 .frentes-row{ gap:5px; margin-bottom:14px; }
 .frente-chip{ padding:7px 4px; font-size:9.5px; }
 .frente-chip .icon{ font-size:15px; margin-bottom:3px; }
+.tour-nav .ghost-btn{ padding:10px 14px; font-size:12px; }
 
 .scoreboard{ padding:9px 12px; margin-bottom:12px; }
 .scoreboard .value{ font-size:16px; }
@@ -599,8 +626,11 @@ h1{ font-size:clamp(18px, 3.4vw, 26px); margin-bottom:4px; }
 .field-label{ margin-bottom:5px; font-size:10px; }
 input[type="text"]{ padding:10px 12px; font-size:14px; margin-bottom:10px; }
 #stage-start p{ font-size:12.5px; margin:0 0 12px; }
+.start-nav .ghost-btn{ padding:12px 14px; font-size:12px; }
 
-.q-count{ font-size:10.5px; margin-bottom:6px; }
+.q-count-row{ margin-bottom:6px; }
+.q-count{ font-size:10.5px; }
+.timer-badge{ font-size:10.5px; padding:3px 9px; }
 #question{ font-size:clamp(14px,2.6vw,18px); margin-bottom:12px; }
 #options{ gap:7px; }
 .option{ padding:11px 13px; font-size:13px; gap:9px; }
@@ -618,6 +648,8 @@ input[type="text"]{ padding:10px 12px; font-size:14px; margin-bottom:10px; }
 .rank-title{ font-size:11.5px; margin-bottom:8px; }
 .rank-list{ gap:6px; margin-bottom:14px; }
 .rank-list li{ padding:7px 10px; font-size:12px; }
+.rank-list.scrollable{ max-height:190px; }
+#toggleRankBtn{ font-size:11.5px; padding:9px 12px; }
 .btn-row{ gap:8px; }
 
 footer{ display:none; }
@@ -632,7 +664,7 @@ footer{ display:none; }
   <div id="gameHud" hidden>
     <div class="scoreboard">
       <div class="player-chip" id="playerChip" hidden>Jugando: <strong id="playerNameTag"></strong></div>
-      <div class="value">Puntos: <span id="score">0</span><span class="max">/5</span></div>
+      <div class="value">Puntos: <span id="score">0</span><span class="max">/6</span></div>
     </div>
 
     <div class="city" id="city">
@@ -641,6 +673,7 @@ footer{ display:none; }
       <div class="building" id="b3"><span class="icon">🌐</span>Portal Yamaha</div>
       <div class="building" id="b4"><span class="icon">🤖</span>Inteligencia Artificial</div>
       <div class="building" id="b5"><span class="icon">📊</span>Analítica Power BI</div>
+      <div class="building" id="b6"><span class="icon">🎓</span>Capacitaciones</div>
     </div>
   </div>
 
@@ -671,6 +704,7 @@ footer{ display:none; }
     </div>
     <ul class="phrase-list" id="tourPhrases"></ul>
     <div class="tour-nav">
+      <button class="ghost-btn" id="tourBackBtn">← Atrás</button>
       <button class="primary-btn" id="tourNextBtn" style="width:auto">Continuar al registro</button>
     </div>
   </div>
@@ -681,13 +715,19 @@ footer{ display:none; }
     <input type="text" id="nameInput" placeholder="Escribe tu nombre para empezar" maxlength="30" autocomplete="off">
     <label class="field-label" for="areaInput">Tu área</label>
     <input type="text" id="areaInput" placeholder="Ej. Servicio, Repuestos, Comercial, Analítica de Datos..." maxlength="40" autocomplete="off">
-    <p>Cinco preguntas sobre nuestra transformación digital. Cada acierto enciende un edificio de la ciudad. Al final verás tu resultado, quién lidera el ranking y qué área suma más puntos.</p>
-    <button class="primary-btn" id="startBtn">Comenzar</button>
+    <p>Cinco preguntas sobre nuestra transformación digital. Cada acierto enciende un edificio de la ciudad. Tienes tiempo limitado por pregunta. Al final verás tu resultado, quién lidera el ranking y qué área suma más puntos.</p>
+    <div class="start-nav">
+      <button class="ghost-btn" id="startBackBtn">← Atrás</button>
+      <button class="primary-btn" id="startBtn">Comenzar</button>
+    </div>
   </div>
 
   <!-- Stage 2: question -->
   <div class="stage" id="stage-quiz" style="display:none">
-    <div class="q-count" id="qCount">Pregunta 1 de 5</div>
+    <div class="q-count-row">
+      <div class="q-count" id="qCount">Pregunta 1 de 5</div>
+      <div class="timer-badge" id="timerBadge">⏱ 20s</div>
+    </div>
     <h2 id="question"></h2>
     <div id="options"></div>
   </div>
@@ -704,6 +744,7 @@ footer{ display:none; }
       <li data-k="b3"><span class="tick">✓</span>Portal Yamaha</li>
       <li data-k="b4"><span class="tick">✓</span>Inteligencia Artificial</li>
       <li data-k="b5"><span class="tick">✓</span>Analítica Power BI</li>
+      <li data-k="b6"><span class="tick">✓</span>Capacitaciones</li>
     </ul>
 
     <div class="winner-card" id="winnerCard" hidden>
@@ -717,6 +758,7 @@ footer{ display:none; }
     <div id="rankingBlock" hidden>
       <p class="rank-title">Ranking del día</p>
       <ul class="rank-list" id="rankList"></ul>
+      <button class="ghost-btn" id="toggleRankBtn" style="margin-bottom:14px" hidden>Ver todos los participantes</button>
     </div>
 
     <div id="areaBlock" hidden>
@@ -726,10 +768,8 @@ footer{ display:none; }
 
     <div class="btn-row">
       <button class="primary-btn" id="playAgainBtn" style="width:auto">Jugar de nuevo</button>
-      <button class="ghost-btn" id="copyPowerBiBtn">Copiar para Power BI</button>
       <button class="ghost-btn" id="resetBoardBtn">Reiniciar ranking</button>
     </div>
-    <p id="copyHint" style="font-size:12px;color:var(--muted);margin-top:10px" hidden></p>
   </div>
 
   <footer>NIVEL ALCANZADO · ARQUITECTO DE DATOS</footer>
@@ -787,6 +827,16 @@ footer{ display:none; }
         "Crear tickets"
       ],
       correct: 1
+    },
+    {
+      question: "¿Cómo forma el área de Power BI a las personas de la compañía?",
+      answers: [
+        "Con capacitaciones en gobierno de datos y Power BI",
+        "Solo con manuales en PDF",
+        "No se ofrece formación",
+        "Únicamente por correo"
+      ],
+      correct: 0
     }
   ];
 
@@ -841,15 +891,29 @@ footer{ display:none; }
         "De los datos crudos a decisiones claras, en un solo vistazo.",
         "Cada visual cuenta una historia; nuestro trabajo es contarla bien."
       ]
+    },
+    {
+      icon: "🎓",
+      title: "Capacitaciones",
+      phrases: [
+        "Formamos a las personas de la compañía en gobierno de datos y Power BI.",
+        "Buscamos usuarios autónomos: que sepan interpretar y construir sus propios tableros, no solo mirarlos.",
+        "Formación y desarrollo de capacidades, para que la cultura de datos crezca en toda la organización."
+      ]
     }
   ];
 
   let tourIndex = 0;
-  const seenTopics = [true, false, false, false, false];
+  const seenTopics = [true, false, false, false, false, false];
   let current = 0;
   let score = 0;
   let playerName = "";
   let playerArea = "";
+  let rankShowAll = false;
+
+  const TIME_PER_Q = 20; // segundos por pregunta
+  let timerInterval = null;
+  let timeLeft = TIME_PER_Q;
 
   const el = {
     gameHud: document.getElementById("gameHud"),
@@ -862,9 +926,11 @@ footer{ display:none; }
     tourKicker: document.getElementById("tourKicker"),
     tourTitle: document.getElementById("tourTitle"),
     tourPhrases: document.getElementById("tourPhrases"),
+    tourBackBtn: document.getElementById("tourBackBtn"),
     tourNextBtn: document.getElementById("tourNextBtn"),
     nameInput: document.getElementById("nameInput"),
     areaInput: document.getElementById("areaInput"),
+    startBackBtn: document.getElementById("startBackBtn"),
     startBtn: document.getElementById("startBtn"),
     stageStart: document.getElementById("stage-start"),
     stageQuiz: document.getElementById("stage-quiz"),
@@ -872,6 +938,7 @@ footer{ display:none; }
     question: document.getElementById("question"),
     options: document.getElementById("options"),
     qCount: document.getElementById("qCount"),
+    timerBadge: document.getElementById("timerBadge"),
     score: document.getElementById("score"),
     playerChip: document.getElementById("playerChip"),
     playerNameTag: document.getElementById("playerNameTag"),
@@ -881,11 +948,10 @@ footer{ display:none; }
     winnerMeta: document.getElementById("winnerMeta"),
     rankingBlock: document.getElementById("rankingBlock"),
     rankList: document.getElementById("rankList"),
+    toggleRankBtn: document.getElementById("toggleRankBtn"),
     areaBlock: document.getElementById("areaBlock"),
     areaList: document.getElementById("areaList"),
     playAgainBtn: document.getElementById("playAgainBtn"),
-    copyPowerBiBtn: document.getElementById("copyPowerBiBtn"),
-    copyHint: document.getElementById("copyHint"),
     resetBoardBtn: document.getElementById("resetBoardBtn"),
     trophyIcon: document.getElementById("trophyIcon")
   };
@@ -964,6 +1030,51 @@ footer{ display:none; }
     el.stageStart.style.display = "block";
   }
 
+  function goBackToTeam(){
+    el.stageTour.style.display = "none";
+    el.stageTeam.style.display = "block";
+  }
+
+  function goBackToTour(){
+    el.stageStart.style.display = "none";
+    el.stageTour.style.display = "block";
+  }
+
+  function clearTimer(){
+    if(timerInterval){ clearInterval(timerInterval); timerInterval = null; }
+  }
+
+  function updateTimerDisplay(){
+    el.timerBadge.textContent = "⏱ " + timeLeft + "s";
+    el.timerBadge.classList.toggle("warn", timeLeft <= 5);
+  }
+
+  function startTimer(){
+    clearTimer();
+    timeLeft = TIME_PER_Q;
+    updateTimerDisplay();
+    timerInterval = setInterval(function(){
+      timeLeft--;
+      updateTimerDisplay();
+      if(timeLeft <= 0){
+        clearTimer();
+        handleTimeout();
+      }
+    }, 1000);
+  }
+
+  function handleTimeout(){
+    const q = questions[current];
+    const allButtons = el.options.querySelectorAll(".option");
+    allButtons.forEach(function(b){ b.disabled = true; });
+    if(allButtons[q.correct]) allButtons[q.correct].classList.add("correct");
+
+    setTimeout(function(){
+      current++;
+      loadQuestion();
+    }, 1100);
+  }
+
   function startQuiz(){
     const typedName = el.nameInput.value.trim();
     const typedArea = el.areaInput.value.trim();
@@ -995,9 +1106,12 @@ footer{ display:none; }
       btn.addEventListener("click", function(){ checkAnswer(index, btn); });
       el.options.appendChild(btn);
     });
+
+    startTimer();
   }
 
   function checkAnswer(index, button){
+    clearTimer();
     const q = questions[current];
     const allButtons = el.options.querySelectorAll(".option");
     allButtons.forEach(function(b){ b.disabled = true; });
@@ -1020,12 +1134,14 @@ footer{ display:none; }
   }
 
   function finish(){
+    clearTimer();
     el.stageQuiz.style.display = "none";
     el.stageFinal.style.display = "block";
 
     el.resultLine.textContent = playerName + ", tu puntaje final fue " + score + " de " + questions.length + ".";
     el.trophyIcon.textContent = score === questions.length ? "🏆" : (score >= 3 ? "🥈" : "🛠️");
 
+    rankShowAll = false;
     const board = addResult(playerName, playerArea, score);
     renderRanking(board);
     renderAreaSummary(board);
@@ -1044,14 +1160,29 @@ footer{ display:none; }
     el.winnerMeta.textContent = "Líder del día · " + (leader.area || "Sin área") + " · " + leader.score + "/" + questions.length + " puntos";
 
     el.rankingBlock.hidden = false;
+    renderRankList(board);
+  }
+
+  function renderRankList(board){
+    const list = rankShowAll ? board : board.slice(0, 5);
     el.rankList.innerHTML = "";
-    board.slice(0, 5).forEach(function(entry, i){
+    el.rankList.classList.toggle("scrollable", rankShowAll && board.length > 8);
+    list.forEach(function(entry, i){
       const li = document.createElement("li");
       li.innerHTML = '<span class="pos">' + (i+1) + '</span><span class="nm">' + escapeHtml(entry.name) +
         '<span class="area-tag">' + escapeHtml(entry.area || "Sin área") + '</span></span>' +
         '<span class="sc">' + entry.score + '/' + questions.length + '</span>';
       el.rankList.appendChild(li);
     });
+
+    if(board.length > 5){
+      el.toggleRankBtn.hidden = false;
+      el.toggleRankBtn.textContent = rankShowAll
+        ? "Ver solo el top 5"
+        : "Ver todos los participantes (" + board.length + ")";
+    }else{
+      el.toggleRankBtn.hidden = true;
+    }
   }
 
   function renderAreaSummary(board){
@@ -1090,6 +1221,7 @@ footer{ display:none; }
   }
 
   function resetGame(){
+    clearTimer();
     current = 0;
     score = 0;
     el.score.textContent = "0";
@@ -1107,8 +1239,10 @@ footer{ display:none; }
     el.stageTour.style.display = "block";
   });
 
+  el.tourBackBtn.addEventListener("click", goBackToTeam);
   el.tourNextBtn.addEventListener("click", goToRegistration);
 
+  el.startBackBtn.addEventListener("click", goBackToTour);
   el.startBtn.addEventListener("click", startQuiz);
   el.nameInput.addEventListener("keydown", function(e){
     if(e.key === "Enter") el.areaInput.focus();
@@ -1116,44 +1250,15 @@ footer{ display:none; }
   el.areaInput.addEventListener("keydown", function(e){
     if(e.key === "Enter") startQuiz();
   });
-  function formatForPowerBI(board){
-    // Tab-separated, no header: paste straight into the Power BI "Enter Data" grid
-    // for the RankingFeria table (Jugador / Area / Puntaje / FechaHora).
-    return board.map(function(entry){
-      const d = new Date(entry.ts);
-      const pad = function(n){ return String(n).padStart(2,"0"); };
-      const fecha = d.getFullYear() + "-" + pad(d.getMonth()+1) + "-" + pad(d.getDate()) +
-        " " + pad(d.getHours()) + ":" + pad(d.getMinutes()) + ":" + pad(d.getSeconds());
-      return [entry.name, entry.area || "Sin área", entry.score, fecha].join("\t");
-    }).join("\n");
-  }
-
-  el.copyPowerBiBtn.addEventListener("click", function(){
-    const board = safeGetBoard();
-    if(!board.length){
-      el.copyHint.hidden = false;
-      el.copyHint.textContent = "Aún no hay resultados guardados en este dispositivo.";
-      return;
-    }
-    const text = formatForPowerBI(board);
-    function showHint(msg){
-      el.copyHint.hidden = false;
-      el.copyHint.textContent = msg;
-    }
-    if(navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(text).then(function(){
-        showHint("Copiado (" + board.length + " filas). En Power BI: Transformar datos → RankingFeria → Editar → pega con Ctrl+V.");
-      }).catch(function(){
-        showHint("No se pudo copiar automáticamente. Selecciona el texto manualmente.");
-      });
-    }else{
-      showHint("Este navegador no permite copiar automáticamente.");
-    }
+  el.toggleRankBtn.addEventListener("click", function(){
+    rankShowAll = !rankShowAll;
+    renderRankList(safeGetBoard());
   });
 
   el.playAgainBtn.addEventListener("click", resetGame);
   el.resetBoardBtn.addEventListener("click", function(){
     safeSaveBoard([]);
+    rankShowAll = false;
     renderRanking([]);
     renderAreaSummary([]);
   });
